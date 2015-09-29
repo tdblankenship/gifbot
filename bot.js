@@ -1,9 +1,6 @@
 var HTTPS = require('https');
-const util = require('util');
-const natural = require('natural');
 var request = require('request');
 var botID = process.env.BOT_ID;
-
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
@@ -33,7 +30,6 @@ function requestLink(searchTerm) {
 
 function postMessage(botResponse) {
   var options, body, botReq;
-
 
   options = {
     hostname: 'api.groupme.com',
