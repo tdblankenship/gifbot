@@ -20,13 +20,11 @@ https://dev.groupme.com/session/new
 Setup an account on Heroku (download their client also): 
 [Heroku](http://heroku.com).
 
-## Get your credentials
+## Setup
 
-All you really need is the BOT_ID from inside the dev.groupme site.
+Get your BOTID from dev.groupme.com and configure it in the Heroku web client under settings
 
-Their API is very friendly to work with.
-
-Feel free to email me if you run into trouble or have suggestions.
+Set your callback URL in the dev.groupme page to your heroku domain (your-heroku-app-name.herokuapp.com)
 
 
 
