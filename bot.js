@@ -1,3 +1,7 @@
+//Create a bot on dev.groupme.com, assign it to the group you want it to live in
+//Login in to your heroku account and input the Bot ID as your config variable named BOT_ID
+//Type /g "Search Term" to display Gifs in your chat
+
 var HTTPS = require('https');
 var request = require('request');
 var botID = process.env.BOT_ID;
