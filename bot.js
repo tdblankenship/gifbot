@@ -4,29 +4,27 @@ var botID = process.env.BOT_ID;
 
 function respond() {
   var request = JSON.parse(this.req.chunks[0]),
-  index = request.text.indexOf('/g');
+  trigger = request.text.substring(0,2);
   
-  if (index != -1 && request.name != 'gifbot') {
+  if (trigger == '/g' && request.name != 'gifbot') {
     searchTerm = request.text.substr(3);
     this.res.writeHead(200);
     requestLink(searchTerm);
     this.res.end();
   }
 }
-  
+
 function requestLink(searchTerm) {
-  request('http://api.giphy.com/v1/gifs/translate?s=' + searchTerm + '&api_key=dc6zaTOxFJmzC', function (error, response, body) {
+  request('http://api.giphy.com/v1/gifs/translate?s=' + searchTerm + '&api_key=dc6zaTOxFJmzC&rating=r', function (error, response, body) {
   if (!error && response.statusCode == 200) {
-    jsonData = body,
-    parsedData = JSON.parse(jsonData),
+    parsedData = JSON.parse(body),
     postMessage(parsedData.data.images.downsized.url, botID, parsedData.data.images.downsized.size);
-  } 
-}); 
+    } 
+  }); 
 } 
 
 function postMessage(botResponse, botID, size) {
   var options, body, botReq;
-
   options = {
     hostname: 'api.groupme.com',
     path: '/v3/bots/post',
