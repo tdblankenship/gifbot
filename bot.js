@@ -11,24 +11,20 @@ function respond() {
     this.res.writeHead(200);
     requestLink(searchTerm);
     this.res.end();
-  } else {
-    this.res.writeHead(200);
-    console.log("don't care");
-    this.res.end();
   }
-}  
+}
   
 function requestLink(searchTerm) {
-  request('http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=' + searchTerm, function (error, response, body) {
+  request('http://api.giphy.com/v1/gifs/translate?s=' + searchTerm + '&api_key=dc6zaTOxFJmzC', function (error, response, body) {
   if (!error && response.statusCode == 200) {
     jsonData = body,
     parsedData = JSON.parse(jsonData),
-    postMessage(parsedData.data.image_url);
-   }
-});  
+    postMessage(parsedData.data.images.downsized.url, botID, parsedData.data.images.downsized.size);
+  } 
+}); 
 } 
 
-function postMessage(botResponse) {
+function postMessage(botResponse, botID, size) {
   var options, body, botReq;
 
   options = {
@@ -39,10 +35,10 @@ function postMessage(botResponse) {
 
   body = {
     "bot_id" : botID,
-    "text" : botResponse
+    "text" : botResponse 
   };
 
-  console.log('sending ' + botResponse + ' to ' + botID);
+  console.log('sending ' + botResponse + ' size: ' + size);
 
   botReq = HTTPS.request(options, function(res) {
       if(res.statusCode == 202) {
@@ -51,7 +47,6 @@ function postMessage(botResponse) {
         console.log('rejecting bad status code ' + res.statusCode);
       }
   });
-
   botReq.on('error', function(err) {
     console.log('error posting message '  + JSON.stringify(err));
   });
